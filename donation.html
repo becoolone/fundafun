@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Donation - FundaFun</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 600;
+    }
+    body {
+      background: #000;
+      color: #fff;
+    }
+    .header {
+      background: #000;
+      padding: 5px clamp(20px, 20vw, 360px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 0.1px solid #808080;
+    }
+    .header-left {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+    }
+    .header-left img {
+      height: 35px;
+      display: block;
+      margin-top: 1px;
+    }
+    .header-left .beta {
+      font-size: 13px;
+      font-weight: 400;
+      opacity: 0.7;
+      letter-spacing: 0.5px;
+      padding: 10px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 60px;
+      font-size: 14px;
+    }
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .nav-links a.subscribe {
+      gap: 6px;
+    }
+    .nav-links a.subscribe img {
+      height: 14px;
+    }
+    .container {
+      display: flex;
+      padding: 60px clamp(20px, 20vw, 360px) 240px;
+      gap: 40px;
+    }
+    .donation-section {
+      width: 70%;
+    }
+    .donation-title {
+      font-size: 48px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    .donation-desc {
+      font-size: 14px;
+      margin-bottom: 10px;
+      margin-top: 40px;
+      line-height: 1.6;
+      text-align: left;
+    }
+    .coin-selection {
+      display: flex;
+      gap: 32px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .coin-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: #111;
+      border: 1px solid #444;
+      border-radius: 8px;
+      cursor: pointer;
+      color: #fff;
+    }
+    .coin-option.active {
+      background: #fff;
+      color: #000;
+    }
+    .coin-option img {
+      height: 24px;
+    }
+    .coin-address, .qr-container {
+      display: none;
+      margin-top: 12px;
+    }
+    .coin-address.active, .qr-container.active {
+      display: block;
+    }
+    .coin-address-box {
+      background: #111;
+      border: 1px solid #444;
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      text-align: left;
+      position: relative;
+    }
+    .copy-btn {
+      position: absolute;
+      right: 12px;
+      top: 12px;
+      background: #fff;
+      color: #000;
+      border: none;
+      padding: 4px 10px;
+      font-size: 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .copied-msg {
+      position: fixed;
+      background: #fff;
+      color: #000;
+      font-size: 12px;
+      padding: 4px 8px;
+      margin: 40px ;
+      margin-top: 25px;
+      border-radius: 4px;
+      opacity: 0;
+      transition: opacity 1s ease;
+      pointer-events: none;
+      z-index: 9999;
+    }
+    .qr-image {
+      height: 150px;
+      margin-top: 20px;
+    }
+    .action-row {
+      display: flex;
+      gap: 100px;
+      margin-top: 100px;
+    }
+    .donate-button {
+      padding: 12px 24px;
+      background: #fff;
+      color: #000;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .donator-table-section {
+      width: 60%;
+      margin-top: 100px;
+      margin-left: 100px;
+    }
+    .donation-amount {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      text-align: left;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid #555;
+      font-size: 13px;
+    }
+    th, td {
+      padding: 10px;
+      border: 1px solid #555;
+      text-align: left;
+    }
+    th {
+      font-weight: bold;
+      background: #111;
+    }
+    .table-heading {
+      font-size: 13px;
+      opacity: 0.7;
+      margin-bottom: 10px;
+    }
+    footer {
+      border-top: 0.1px solid #808080;
+      padding: 40px clamp(20px, 20vw, 360px) 20px;
+      background: #000;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+    }
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-col a {
+      color: #fff;
+      text-decoration: none;
+    }
+    .footer-socials {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+    }
+    .footer-socials img {
+      height: 28px;
+      cursor: pointer;
+    }
+    .disclaimer {
+      margin-top: 42px;
+      font-size: 14px;
+      line-height: 1.6;
+      font-weight: 600;
+    }
+    .footer-bottom {
+      margin-top: 30px;
+      font-size: 12px;
+      opacity: 0.6;
+      text-align: left;
+      font-weight: 400;
+    }
+    @media (max-width: 1024px) {
+    footer {
+      padding: 40px 40px 20px;
+    }
+
+    .footer-grid {
+      flex-direction: column;
+      gap: 30px;
+      align-items: flex-start;
+    }
+
+    .footer-col {
+      width: 100%;
+    }
+
+    .footer-socials {
+      order: 1;
+      margin-top: 20px;
+      justify-content: flex-start;
+      gap: 30px;
+    }
+
+    .disclaimer {
+      margin-top: 40px;
+      text-align: left;
+      font-size: 14px;
+      line-height: 1.6;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .footer-bottom {
+      margin-top: 30px;
+      text-align: left;
+      font-size: 12px;
+      opacity: 0.6;
+      font-weight: 400;
+      color: #fff;
+    }
+  }
+
+  @media (max-width: 600px) {
+    footer {
+      padding: 30px 20px 20px;
+    }
+
+    .footer-socials img {
+      height: 24px;
+    }
+  }
+
+    #donation-form-container {
+      display: none;
+      margin-top: 30px;
+      background: #111;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 500px;
+      color: #fff;
+    }
+    #donation-form-container h3 {
+      font-weight: 600;
+      font-size: 22px;
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    #donation-form-container label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    #donation-form-container input,
+    #donation-form-container textarea {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 20px;
+      background: #222;
+      border: 1px solid #444;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 14px;
+      font-weight: 400;
+      resize: vertical;
+    }
+    #donation-form-container textarea {
+      min-height: 80px;
+    }
+    #donation-form-container button[type="submit"] {
+      background: #fff;
+      color: #000;
+      font-weight: bold;
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.2s ease;
+    }
+    #donation-form-container button[type="submit"]:hover {
+      background: #ddd;
+    }
+    .hamburger {
+    display: none;
+    cursor: pointer;
+  }
+  .hamburger img {
+    height: 22px;
+  }
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: #000;
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 100%;
+    border-top: 1px solid #808080;
+    z-index: 1000;
+  }
+  .mobile-menu a {
+    padding: 14px 20px;
+    border-bottom: 1px solid #444;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  @media (max-width: 1024px) {
+    .header {
+      padding: 5px 20px;
+    }
+    .container {
+      flex-direction: column;
+      padding: 40px 20px 100px;
+    }
+    .donation-section, .donator-table-section {
+      width: 100%;
+      margin: 0;
+    }
+    .action-row {
+      flex-direction: column;
+      gap: 20px;
+    }
+    .footer-grid {
+      flex-direction: column;
+      gap: 40px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+    .hamburger {
+      display: block;
+    }
+    .header {
+      position: relative;
+    }
+    .footer-grid {
+      padding: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .donator-table-section {
+      margin-top: 60px;
+    }
+    .qr-image {
+      height: 120px;
+    }
+  }
+  </style>
+</head>
+<body>
+      <div class="header">
+      <div class="header-left">
+        <a href="index.html"><img src="logo.png" alt="FundaFun Logo" /></a>
+        <span class="beta">beta</span>
+      </div>
+      <div class="nav-links">
+        <a href="subscribe.html" class="subscribe">Subscribe <img src="free.png" alt="Free Badge" /></a>
+        <a href="about.html">About</a>
+        <a href="donation.html">Donation</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="hamburger" onclick="toggleMobileMenu()">
+        <img src="ham.png" alt="Menu" />
+      </div>
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="subscribe.html">Subscribe</a>
+        <a href="about.html">About</a>
+        <a href="donation.html">Donation</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+
+
+  <div class="container">
+    <div class="donation-section">
+      <div class="donation-title">Donation</div>
+      <div class="donation-desc">Unfortunately our website is work based on donation and creator self fund and any donation will make this platform smoother and faster in delivering information.</div>
+      <div class="donation-desc">Select the coin you want to donate with:</div>
+      <div class="coin-selection">
+        <div class="coin-option" onclick="selectCoin('btc', this)"><img src="btc.png"><span>BTC</span></div>
+        <div class="coin-option" onclick="selectCoin('eth', this)"><img src="eth.png"><span>ETH</span></div>
+        <div class="coin-option" onclick="selectCoin('usdt', this)"><img src="usdt.png"><span>USDT</span></div>
+        <div class="coin-option" onclick="selectCoin('bnb', this)"><img src="bnb.png"><span>BNB</span></div>
+        <div class="coin-option" onclick="selectCoin('sol', this)"><img src="sol.png"><span>SOL</span></div>
+      </div>
+
+      <div id="btc" class="coin-address"><div class="coin-address-box">1A2b3C4d5E6f7G8h9I0j1K2l3M4n5O6P7Q <button class="copy-btn" onclick="copyAddress(event, '1A2b3C4d5E6f7G8h9I0j1K2l3M4n5O6P7Q')">Copy</button></div><img class="qr-image" src="btcQR.jpg" alt="BTC QR"></div>
+      <div id="eth" class="coin-address"><div class="coin-address-box">0x123abc456def789ghi <button class="copy-btn" onclick="copyAddress(event, '0x123abc456def789ghi')">Copy</button></div><img class="qr-image" src="ethQR.jpg" alt="ETH QR"></div>
+      <div id="usdt" class="coin-address"><div class="coin-address-box">T7xYz9U2e1Fg6m0R2aBc5Ds3T8uVw1Qr <button class="copy-btn" onclick="copyAddress(event, 'T7xYz9U2e1Fg6m0R2aBc5Ds3T8uVw1Qr')">Copy</button></div><img class="qr-image" src="usdtQR.jpg" alt="USDT QR"></div>
+      <div id="bnb" class="coin-address"><div class="coin-address-box">bnb123456789 <button class="copy-btn" onclick="copyAddress(event, 'bnb123456789')">Copy</button></div><img class="qr-image" src="bnbQR.jpg" alt="BNB QR"></div>
+      <div id="sol" class="coin-address"><div class="coin-address-box">sol1q2w3e4r5t6y7u8i9 <button class="copy-btn" onclick="copyAddress(event, 'sol1q2w3e4r5t6y7u8i9')">Copy</button></div><img class="qr-image" src="solQR.jpg" alt="SOL QR"></div>
+
+      <div class="action-row">
+        <button class="donate-button" onclick="toggleForm()">I Donated</button>
+      </div>
+
+      <div id="donation-form-container">
+        <h3>This form will manually check the sender address. Please make sure to write it correctly.</h3>
+        <form action="https://formsubmit.co/salihberwan@gmail.com" method="POST">
+          <label for="donor-name">Name (optional)</label>
+          <input type="text" id="donor-name" name="Name" placeholder="Your name">
+
+          <label for="donor-email">Email</label>
+          <input type="email" id="donor-email" name="Email" required>
+
+          <label for="crypto-address">Crypto Sender Address (must match your donation)</label>
+          <input type="text" id="crypto-address" name="Crypto Address" required placeholder="e.g. 0x123... or btc1...">
+
+          <label for="social-link">One Social Media Link (optional)</label>
+            <div style="display: flex;">
+              <input type="hidden" id="prefix" value="https://www.">
+              <input type="text" id="social-link" name="Social Link" required placeholder="instagram.com/bob" oninput="document.getElementById('combined-link').value = document.getElementById('prefix').value + this.value;">
+            </div>
+            <input type="hidden" name="Social Link" id="combined-link">
+
+
+          <label for="donor-message">Personal Message (optional)</label>
+          <textarea id="donor-message" name="Message" placeholder="Say something..."></textarea>
+
+          <input type="hidden" name="_captcha" value="false" />
+          <button type="submit">Send</button>
+        </form>
+      </div>
+
+    </div>
+
+    <div class="donator-table-section">
+      <div class="table-heading">List of the Donators</div>
+      <table>
+        <thead><tr><th>Name</th><th>Message</th><th>Social</th><th>Amount</th></tr></thead>
+        <tbody>
+          <tr><td>Jane</td><td>Keep building!</td><td>@jane</td><td>$50</td></tr>
+          <tr><td>Ali</td><td>Great info!</td><td>@ali</td><td>$25</td></tr>
+        </tbody>
+      </table>
+      <div class="donation-amount">605$ Donated</div>
+    </div>
+  </div>
+
+  <div id="copied-popup" class="copied-msg">Copied!</div>
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+      </div>
+      <div class="footer-col">
+        <a href="contact.html">Contact</a>
+        <a href="subscribe.html">Subscribe Free</a>
+      </div>
+      <div class="footer-col">
+        <a href="about.html">About</a>
+        <a href="donation.html">Donation</a>
+      </div>
+      <div class="footer-socials">
+        <a href="https://discord.gg/5CrNFB4Zqt" target="_blank"><img src="discord.png" alt="Discord"></a>
+        <a href="https://t.me/fundafuns" target="_blank"><img src="telegram.png" alt="Telegram"></a>
+        <a href="https://x.com/fundafuns" target="_blank"><img src="x.png" alt="X"></a>
+      </div>
+    </div>
+    <div class="disclaimer"><strong>Disclaimer!</strong><br>The information and fundamental data displayed on this website are provided for general informational and educational purposes only. They are not intended as financial advice, investment recommendations, or trading signals. Fundamental analysis is just one of many tools it can often suggest one market direction, while the actual price action does the opposite. Market behavior is unpredictable, and relying solely on this data can lead to losses. Always perform your own independent research before making any financial decisions. This platform is created to raise awareness and provide perspective, especially for beginners, not to guide your trades. We take no responsibility for any actions taken based on the information provided here.</div>
+    <div class="footer-bottom">© 2024 FundaFun. All rights reserved.</div>
+  </footer>
+
+  <script>
+    let activeCoin = null;
+
+    function selectCoin(coinId, element) {
+      if (activeCoin === coinId) {
+        document.getElementById(coinId).classList.remove('active');
+        element.classList.remove('active');
+        activeCoin = null;
+      } else {
+        document.querySelectorAll('.coin-address').forEach(el => el.classList.remove('active'));
+        document.querySelectorAll('.coin-option').forEach(el => el.classList.remove('active'));
+        document.getElementById(coinId).classList.add('active');
+        element.classList.add('active');
+        activeCoin = coinId;
+      }
+    }
+
+    function copyAddress(event, address) {
+      event.stopPropagation();
+      navigator.clipboard.writeText(address).then(() => {
+        const popup = document.getElementById('copied-popup');
+        popup.style.opacity = 1;
+        setTimeout(() => { popup.style.opacity = 0; }, 1500);
+      });
+    }
+
+    function toggleForm() {
+      const formContainer = document.getElementById('donation-form-container');
+      formContainer.style.display = (formContainer.style.display === 'none' || formContainer.style.display === '') ? 'block' : 'none';
+    }
+  </script>
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById("mobileMenu");
+      menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+    }
+  </script>
+</body>
+</html>

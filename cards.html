@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>FundaFun - Cards</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: optimizeLegibility;
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+    }
+
+    .cards-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 75px;
+    }
+
+    .timeframe-box {
+      height: 120px;
+      border-radius: 10px;
+      background-color: #1A1A1A;
+      padding: 16px;
+      font-size: 14px;
+      font-weight: bold;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      align-items: center;
+      min-width: 90px;
+      margin-left: 30px;
+    }
+
+    .timeframe-option input[type="radio"] {
+      display: none;
+    }
+
+    .timeframe-option label {
+      cursor: pointer;
+      padding: 4px 10px;
+      border-radius: 6px;
+      transition: 0.2s;
+      color: #fff;
+    }
+
+    .timeframe-option input[type="radio"]:checked + label {
+      background: #fff;
+      color: #000;
+    }
+
+    .cards-scroll-wrapper {
+      padding: 0 10px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .decor-circle {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      overflow: hidden;
+      flex-shrink: 0;
+      border: 2px solid #fff;
+    }
+
+    .decor-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .cards-container {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 36px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+
+    .card {
+      position: relative;
+      width: 180px;
+      height: 120px;
+      border: 2px solid #808080;
+      border-radius: 10px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transform: translateZ(0);
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 10px;
+      z-index: 0;
+    }
+
+    .card.bullish::before {
+      background: radial-gradient(circle at center, green 2%, black 80%);
+    }
+
+    .card.bearish::before {
+      background: radial-gradient(circle at center, red 2%, black 80%);
+    }
+
+    .card.neutral::before {
+      background: radial-gradient(circle at center, gray 2%, black 80%);
+    }
+
+    .card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-flag {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .card-flag img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card-sentiment {
+      position: absolute;
+      top: 20px;
+      right: 16px;
+      font-size: 20px;
+      font-weight: 600;
+    }
+
+    .card-percent {
+      font-size: 24px;
+      font-weight: 600;
+      color: #fff;
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+    }
+
+    .card-circle {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      width: 26px;
+      height: 26px;
+      background: #fff;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .card-circle img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .card:hover::after {
+      content: "Not openable in beta version.";
+      position: absolute;
+      bottom: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #222;
+      color: #fff;
+      padding: 6px 10px;
+      font-size: 11px;
+      white-space: nowrap;
+      border-radius: 6px;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .card.locked {
+      padding: 0;
+    }
+
+    .card.locked img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .beta-tooltip {
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      top: 120%;
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #333;
+      color: white;
+      font-size: 12px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      white-space: nowrap;
+      transition: opacity 0.2s;
+      z-index: 100;
+    }
+
+    .technical-beta:hover .beta-tooltip {
+      visibility: visible;
+      opacity: 1;
+    }
+
+  </style>
+</head>
+<body>
+
+  <div class="cards-header">
+    <div class="cards-scroll-wrapper">
+
+      <!-- Left Circle -->
+      <div class="decor-circle">
+        <img src="left.jpg" alt="Left Circle" />
+      </div>
+
+      <!-- Cards -->
+      <div class="cards-container">
+        <div class="card bullish">
+          <div class="card-flag">
+            <img src="EU.jpg" alt="EU Flag" />
+          </div>
+          <div class="card-sentiment">EUR</div>
+          <div class="card-percent">67%</div>
+          <div class="card-circle">
+            <img src="i.jpg" alt="Info" />
+          </div>
+        </div>
+
+        <div class="card bearish">
+          <div class="card-flag">
+            <img src="USD.jpg" alt="USD Flag" />
+          </div>
+          <div class="card-sentiment">USD</div>
+          <div class="card-percent">34%</div>
+          <div class="card-circle">
+            <img src="i.jpg" alt="Info" />
+          </div>
+        </div>
+
+        <div class="card neutral">
+          <div class="card-flag">
+            <img src="GOLD.jpg" alt="Gold" />
+          </div>
+          <div class="card-sentiment">Gold</div>
+          <div class="card-percent">50%</div>
+          <div class="card-circle">
+            <img src="i.jpg" alt="Info" />
+          </div>
+        </div>
+
+        <div class="card locked">
+          <img src="blur.jpg" alt="Locked" />
+        </div>
+
+        <div class="card locked">
+          <img src="blur.jpg" alt="Locked" />
+        </div>
+      </div>
+
+      <!-- Right Circle -->
+      <div class="decor-circle">
+        <img src="right.jpg" alt="Right Circle" />
+      </div>
+    </div>
+
+    <!-- Timeframe -->
+    <!-- Timeframe -->
+    <div style="display: flex; flex-direction: column; align-items: center;">
+      <div class="timeframe-box">
+        <div class="timeframe-option">
+          <input type="radio" id="monthly" name="timeframe" checked />
+          <label for="monthly">Monthly</label>
+        </div>
+        <div class="timeframe-option">
+          <input type="radio" id="weekly" name="timeframe" />
+          <label for="weekly">Weekly</label>
+        </div>
+      </div>
+        <div class="technical-beta" style="margin-left: 30px; margin-top: 10px; font-size: 13px; color: #888; font-weight: 300; text-align: center; position: relative;">
+    Technical
+    <span class="beta-tooltip">Unavailable in beta.</span>
+    </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

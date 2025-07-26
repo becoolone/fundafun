@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Subscribe - FundaFun</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Open Sans', sans-serif;
+      font-weight: 600;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+    }
+
+    .header {
+      background: #000;
+      padding: 5px clamp(20px, 20vw, 360px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 0.1px solid #808080;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+    }
+
+    .header-left img {
+      height: 35px;
+      display: block;
+      margin-top: 1px;
+    }
+
+    .header-left .beta {
+      font-size: 13px;
+      font-weight: 400;
+      opacity: 0.7;
+      letter-spacing: 0.5px;
+      padding: 10px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 60px;
+      font-size: 14px;
+    }
+
+    .nav-links a {
+      color: #fff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+
+    .nav-links a.subscribe {
+      gap: 6px;
+    }
+
+    .nav-links a.subscribe img {
+      height: 14px;
+    }
+
+    .container {
+      padding: 60px clamp(20px, 20vw, 360px) 240px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 48px;
+      margin-top: 100px;
+    }
+
+    footer {
+      border-top: 0.1px solid #808080;
+      padding: 40px clamp(20px, 20vw, 360px) 20px;
+      background: #000;
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      margin-top: 320px; /* Push footer down */
+    }
+    .footer-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+    }
+    .footer-col {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .footer-col a {
+      color: #fff;
+      text-decoration: none;
+    }
+    .footer-socials {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+    }
+    .footer-socials img {
+      height: 28px;
+      cursor: pointer;
+    }
+    .disclaimer {
+      margin-top: 42px;
+      font-size: 14px;
+      line-height: 1.6;
+      font-weight: 600;
+    }
+    .footer-bottom {
+      margin-top: 30px;
+      font-size: 12px;
+      opacity: 0.6;
+      text-align: left;
+      font-weight: 400;
+    }
+    @media (max-width: 1024px) {
+    footer {
+      padding: 40px 40px 20px;
+      margin-top: 100px; /* reduce on smaller screens */
+    }
+
+    .footer-grid {
+      flex-direction: column;
+      gap: 30px;
+      align-items: flex-start;
+    }
+
+    .footer-col {
+      width: 100%;
+    }
+
+    .footer-socials {
+      order: 1;
+      margin-top: 20px;
+      justify-content: flex-start;
+      gap: 30px;
+    }
+
+    .disclaimer {
+      margin-top: 40px;
+      text-align: left;
+      font-size: 14px;
+      line-height: 1.6;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .footer-bottom {
+      margin-top: 30px;
+      text-align: left;
+      font-size: 12px;
+      opacity: 0.6;
+      font-weight: 400;
+      color: #fff;
+    }
+  }
+
+  @media (max-width: 600px) {
+    footer {
+      padding: 30px 20px 20px;
+    }
+
+    .footer-socials img {
+      height: 24px;
+    }
+  }
+  .hamburger {
+    display: none;
+    cursor: pointer;
+  }
+  .hamburger img {
+    height: 22px;
+  }
+  .mobile-menu {
+    display: none;
+    flex-direction: column;
+    background: #000;
+    position: absolute;
+    top: 55px;
+    right: 0;
+    width: 100%;
+    border-top: 1px solid #808080;
+    z-index: 1000;
+  }
+  .mobile-menu a {
+    padding: 14px 20px;
+    border-bottom: 1px solid #444;
+    color: #fff;
+    text-decoration: none;
+  }
+
+
+
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none;
+    }
+    .hamburger {
+      display: block;
+    }
+    .header {
+      position: relative;
+    }
+    .footer-grid {
+      padding: 0;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .donator-table-section {
+      margin-top: 60px;
+    }
+    .qr-image {
+      height: 120px;
+    }
+  }
+
+
+.signup-container {
+  width: 400px;
+  background-color: #1a1a1a;
+  padding: 40px;
+  border-radius: 12px;
+  margin-left: 360px;
+  margin-top: 100px;
+  margin-bottom: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.signup-box {
+  width: 100%;
+}
+
+.main-heading {
+  font-size: 22px;
+  font-weight: 700;
+  text-align: center;
+  width: 100%;
+  margin-bottom: 15px;
+  margin-top:30px ;
+}
+
+.sub-heading {
+  font-size: 15px;
+  font-weight: 400;
+  color: #ccc;
+  margin-bottom: 35px;
+  text-align: center;
+  width: 100%;
+}
+
+.auth-button {
+  width: 100%;
+  background: #111;
+  border: 1px solid #888;
+  border-radius: 10px;
+  padding: 12px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 25px;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.auth-button:hover {
+  border-color: #fff;
+}
+
+.auth-button img {
+  width: 22px;
+  height: 22px;
+}
+
+.terms {
+  font-size: 9px;
+  color: #B3B3B3;
+  line-height: 1.6;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.signup-row {
+  display: flex;
+  align-items: center;
+  gap: 100px;
+}
+
+.image-slider {
+  position: absolute;    /* relative to nearest positioned ancestor */
+  top: 110px;            /* adjust vertical */
+  right: 360px;          /* 360px from right */
+  width: 700px;
+  height: 700px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: transparent;
+}
+
+
+.slider-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 10px;
+  display: none;
+  transition: opacity 1s ease-in-out;
+}
+
+.slider-image.active {
+  display: block;
+}
+
+.slider-controls {
+  position: absolute;
+  bottom: 220px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+}
+
+.slider-dot {
+  width: 44px;
+  height: 6px;
+  background-color: grey;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.slider-dot.active {
+  background-color: white;
+}
+
+  @media (max-width: 1024px) {
+  .header {
+    padding: 5px 20px;
+  }
+  .container {
+    flex-direction: column;
+    padding: 40px 20px 100px;
+  }
+
+  /* Position center: horizontally center the signup box */
+  .signup-container {
+    margin-left: -100px !important;
+    margin-top: 100px; /* keep your top margin */
+  }
+  .donation-section, .donator-table-section {
+    width: 100%;
+    margin: 0;
+  }
+  .action-row {
+    flex-direction: column;
+    gap: 20px;
+  }
+  .footer-grid {
+    flex-direction: column;
+    gap: 40px;
+
+  }
+}
+@media (max-width: 1919px) {
+  .image-slider {
+    display: none !important;
+  }
+}
+
+
+ @media (max-width: 900px) {
+
+    .container {
+    flex-direction: column;
+    padding: 40px 20px 100px;
+    }
+
+    /* Position center: horizontally center the signup box */
+    .signup-container {
+    margin-left: -353px !important;
+    margin-top: 100px; /* keep your top margin */
+     background-color: #000 !important; /* changed to black */
+    }
+ }
+
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <a href="index.html"><img src="logo.png" alt="FundaFun Logo" /></a>
+        <span class="beta">beta</span>
+      </div>
+      <div class="nav-links">
+        <a href="donation.html">Donation</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="signup.html" class="subscribe">Sign In<img src="free.png" alt="Free Badge" /></a>
+      </div>
+      <div class="hamburger" onclick="toggleMobileMenu()">
+        <img src="ham.png" alt="Menu" />
+      </div>
+      <div class="mobile-menu" id="mobileMenu">
+        <a href="donation.html">Donation</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="signup.html">Sign In</a>
+
+      </div>
+    </div>
+
+  <!-- Main Content -->
+  <div class="signup-wrapper" style="display: flex; margin-left: 360px; margin-top: 100px; margin-bottom: 120px; gap: 40px;">
+  <div class="signup-container" style="margin: 0;">
+    <div class="signup-box">
+      <h1 class="main-heading">Join the Fundafun Experience</h1>
+      <p class="sub-heading">First 100 accounts are FREE!</p>
+
+      <div class="auth-button"><img src="google.png"> Sign in with Google</div>
+      <div class="auth-button"><img src="apple.png"> Sign in with Apple</div>
+
+      <p class="terms">
+        By continuing, you agree to our Terms of Service and Privacy Policy.<br>
+        This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.<br>
+        Sign in with Apple is subject to Apple’s Privacy Policy.
+      </p>
+    </div>
+  </div>
+
+  <!-- New Image Container -->
+  <div class="image-slider">
+    <img src="login1.png" alt="Slide Image" class="slider-image active" />
+    <img src="login2.png" alt="Slide Image" class="slider-image" />
+
+    <div class="slider-controls">
+      <div class="slider-dot active" onclick="showSlide(0)"></div>
+      <div class="slider-dot" onclick="showSlide(1)"></div>
+    </div>
+  </div>
+</div>
+
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Use</a>
+      </div>
+      <div class="footer-col">
+        <a href="signup.html">Sign In</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <div class="footer-col">
+        <a href="about.html">About</a>
+        <a href="donation.html">Donation</a>
+      </div>
+      <div class="footer-socials">
+        <a href="https://discord.gg/5CrNFB4Zqt" target="_blank">
+          <img src="discord.png" alt="Discord">
+        </a>
+        <a href="https://t.me/fundafuns" target="_blank">
+          <img src="telegram.png" alt="Telegram">
+        </a>
+        <a href="https://x.com/fundafuns" target="_blank">
+          <img src="x.png" alt="X">
+        </a>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      <strong>Disclaimer !</strong><br>
+      The information and fundamental data displayed on this website are provided for general informational and educational purposes only. They are not intended as financial advice, investment recommendations, or trading signals. Fundamental analysis is just one of many tools it can often suggest one market direction, while the actual price action does the opposite. Market behavior is unpredictable, and relying solely on this data can lead to losses. Always perform your own independent research before making any financial decisions. This platform is created to raise awareness and provide perspective, especially for beginners, not to guide your trades. We take no responsibility for any actions taken based on the information provided here.
+    </div>
+
+    <div class="footer-bottom">
+      © 2025 fundafun. All rights reserved.
+    </div>
+  </footer>
+  <script>
+    function toggleMobileMenu() {
+      const menu = document.getElementById("mobileMenu");
+      menu.style.display = (menu.style.display === "flex") ? "none" : "flex";
+    }
+  </script>
+<script>
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slider-image');
+  const dots = document.querySelectorAll('.slider-dot');
+
+  function showSlide(index) {
+    slides.forEach((img, i) => {
+      img.classList.toggle('active', i === index);
+      dots[i].classList.toggle('active', i === index);
+    });
+    currentSlide = index;
+  }
+
+  setInterval(() => {
+    currentSlide = (currentSlide + 1) % slides.length;
+    showSlide(currentSlide);
+  }, 15000);
+</script>
+
+</body>
+</html>
